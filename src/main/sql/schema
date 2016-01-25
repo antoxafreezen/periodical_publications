@@ -1,0 +1,49 @@
+create database periodical_publications
+    CHARACTER SET 'utf8'
+    COLLATE 'utf8_general_ci';
+
+create table periodical_publications.user(
+    id int NOT NULL AUTO_INCREMENT,
+    first_name varchar(30) DEFAULT NUll,
+    second_name varchar(30) DEFAULT NULL,
+    address varchar(50) DEFAULT NULL,
+    email varchar(40) DEFAULT NULL,
+    password varchar(45) DEFAULT NULL,
+    admin tinyint(1) DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY email_unique(email)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table periodical_publications.publication(
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(45) NOT NULL,
+    description varchar(100) NOT NULL,
+    price float DEFAULT NULL,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table periodical_publications.subscription(
+    id int NOT NULL AUTO_INCREMENT,
+    id_user int DEFAULT NULL,
+    price float DEFAULT NULL,
+    start_date datetime DEFAULT NULL,
+    end_date datetime DEFAULT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(id_user) REFERENCES periodical_publications.user(id) ON DELETE NO ACTION ON UPDATE NO ACTION
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table periodical_publications.subscription_part(
+    id int NOT NULL AUTO_INCREMENT,
+    id_subs int DEFAULT NULL,
+    id_publ int DEFAULT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(id_subs) REFERENCES periodical_publications.subscription(id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY(id_publ) REFERENCES periodical_publications.publication(id) ON DELETE NO ACTION ON UPDATE NO ACTION
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+use periodical_publications;
+insert into user(first_name, second_name, address, email, password,admin) values('admin', 'admin', 'none', 'admin@yandex.ua', '0000', 1);
+
+insert into publication(name, description, price) values ('Men\'s Health', 'About sport and health.', 30);
+insert into publication(name, description, price) values ('Ігроманія', 'Ексклюзивні подробиці про відеоігри.', 20);
+insert into publication(name, description, price) values ('Fashion and style', 'News from fashion world.', 25);

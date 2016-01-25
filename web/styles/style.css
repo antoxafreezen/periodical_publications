@@ -1,0 +1,14 @@
+html, body{
+    padding: 0;
+    margin: 0;
+}
+
+.mdl-mini-footer{
+    background-color: teal;
+}
+
+
+#demo-menu-top-left{
+    margin-left: 10mm;
+}
+
